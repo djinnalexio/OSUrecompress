@@ -8,7 +8,7 @@ import shutil
 
 help_text = """
 
-Compress beatmaps folders back to '.osz' files.
+Compress OSU! beatmaps or skins folders back to '.osz/.0sk' files. Useful to bring all your maps to OSU!Lazer.
 """
 
 #Initialize parser
@@ -49,6 +49,13 @@ def verifyMode():
 def checkDirs(dirName,inputDir,outputDir):
     dirList = [inputDir,outputDir]
     dirLabelList = ["source", "destination"]
+
+    pathsCheck = input ("\nContinue? [Y/n] ")
+    if not pathsCheck.upper() == "N":
+        print ("""
+        Please check the source path or the contents of your source folder.
+        It should contain folders with %s names.""" % osuFile)
+        exit()
 
     for i in range(0,2):
         if not dirList[i]:#if path is not given
@@ -106,19 +113,13 @@ def verifyRemove():
     rcheck = input("\nproceed with Removal of original files? [Y/n] ")
     if rcheck.upper() == "Y":# if yes
         print ("Removal ENABLED: Original files will be deleted.")
-        confirm = input("Continue? [y/N] ")
-        if confirm.upper() == "N":
-            exit()
-        else:
-            pass
         return True
+
     else: #any other answer
         print ("Removal DISABLED: Original files will be left untouched.")
         confirm = input("Continue? [y/N] ")
         if confirm.upper() == "N":
             exit()
-        else:
-            pass
         return False
         
 

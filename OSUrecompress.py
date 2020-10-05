@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import sys
 import os
 from os.path import isdir, join
 import argparse 
@@ -35,14 +36,14 @@ deleteSources = args.remove
 def verifyMode():
     if args.beatmaps & args.skins:
         print("Please choose only one mode: '--beatmaps' or '--skins'")
-        exit()
+        sys.exit()
     elif args.beatmaps:
         return "Songs", "beatmap", ".osz"
     elif args.skins:
         return "Skins", "skin", ".osk"
     else:
         print("No mode was selected. Please use '-b' to compress OSU beatmaps or '-s' to compress OSU skins.")
-        exit()
+        sys.exit()
 
 
 #function to check that input and output directories exist
@@ -50,28 +51,22 @@ def checkDirs(dirName,inputDir,outputDir):
     dirList = [inputDir,outputDir]
     dirLabelList = ["source", "destination"]
 
-    pathsCheck = input ("\nContinue? [Y/n] ")
-    if not pathsCheck.upper() == "N":
-        print ("""
-        Please check the source path or the contents of your source folder.
-        It should contain folders with %s names.""" % osuFile)
-        exit()
-
     for i in range(0,2):
         if not dirList[i]:#if path is not given
             print ("The {0} directory was not given! Please use '--{1} followed by your source directory.".format(
                 dirLabelList[i].upper(), dirLabelList[i]))
-            exit()
+            sys.exit()
         
         elif not isdir(dirList[i]):#if path is not an existing directory
             print ("The {0} directory does not exist! Check that the path to your {1} directory is correct.".format(
                 dirLabelList[i].upper(), dirLabelList[i]))
-            exit()
-
-        else:#if the path is correct
-            pass
+            sys.exit()
 
     print ("\nOsu! '{0}' Folder: {1} \nFolder for generated compressed files: {2}".format(dirName,inputDir,outputDir))
+    pathsCheck = input ("\nContinue? [Y/n] ")
+    if not pathsCheck.upper() == "Y":
+        print ("Code exited. Make sure your paths are correct.")
+        sys.exit()
 
 
 #function to get list of beatmaps/skins
@@ -92,9 +87,9 @@ def scanSource(inputDir):
         print ("""
         Please check the source path or the contents of your source folder.
         It should contain folders with %s names.""" % osuFile)
-        exit()
+        sys.exit()
 
-    print ("\n{0} {1}s found. All items on this list will be turned into '{2}' files.".format(len(osuItemList), osuFile, osuType))
+    print ("\n{0} {1} folders found. All items on this list will be turned into '{2}' files.".format(len(osuItemList), osuFile, osuType))
     return osuItemList
     
 
@@ -119,7 +114,7 @@ def verifyRemove():
         print ("Removal DISABLED: Original files will be left untouched.")
         confirm = input("Continue? [y/N] ")
         if confirm.upper() == "N":
-            exit()
+            sys.exit()
         return False
         
 

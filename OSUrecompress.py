@@ -9,7 +9,7 @@ import shutil
 
 help_text = """
 
-Compress OSU! beatmaps or skins folders back to '.osz/.0sk' files. Useful to bring all your maps to OSU!Lazer.
+Compress osu! beatmaps or skins folders back to '.osz/.0sk' files. Useful to bring all your maps to osu!Lazer.
 """
 
 #Initialize parser
@@ -42,7 +42,7 @@ def verifyMode():
     elif args.skins:
         return "Skins", "skin", ".osk"
     else:
-        print("No mode was selected. Please use '-b' to compress OSU beatmaps or '-s' to compress OSU skins.")
+        print("No mode was selected. Please use '-b' to compress osu! beatmaps or '-s' to compress osu! skins.")
         sys.exit()
 
 
@@ -62,7 +62,7 @@ def checkDirs(dirName,inputDir,outputDir):
                 dirLabelList[i].upper(), dirLabelList[i]))
             sys.exit()
 
-    print ("\nOsu! '{0}' Folder: {1} \nFolder for generated compressed files: {2}".format(dirName,inputDir,outputDir))
+    print ("\nosu! '{0}' Folder: {1} \nFolder for generated compressed files: {2}".format(dirName,inputDir,outputDir))
     pathsCheck = input ("\nContinue? [Y/n] ")
     if not pathsCheck.upper() == "Y":
         print ("Code exited. Make sure your paths are correct.")
@@ -132,7 +132,7 @@ def OSUcompresser(osuItemList,inputDir,outputDir):
          #compress folders into zip files
         shutil.make_archive(join(outputDir, folder), 'zip', join(inputDir, folder))
          
-         #replace the file extension to make it OSU! compatible
+         #replace the file extension to make it osu! compatible
         os.rename(r'{0}.zip'.format(join(outputDir, folder)), r'{0}{1}'.format(join(outputDir, folder), osuType))
 
         #Add it to list of generated files      
